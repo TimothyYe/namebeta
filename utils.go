@@ -54,6 +54,26 @@ func parseArgs(args []string) (string, bool, bool) {
 	return "", true, true
 }
 
+func whoisQuery(domain string) []interface{} {
+	var result []interface{}
+	param := map[string]string{}
+	param["domain"] = domain
+
+	request := gorequest.New()
+	_, body, _ := request.Post(whoisURL).
+		Type("form").
+		Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36").
+		Set("Refer", fmt.Sprintf(referURL, domain)).
+		SendMap(param).End()
+
+	if err := json.Unmarshal([]byte(body), &result); err != nil {
+		color.Red(fmt.Sprintf("%s Failed to query WHOIS information for domain: %s \r\n", crossSymbol, domain))
+		os.Exit(1)
+	}
+
+	return result
+}
+
 func domainQuery(domain string, param map[string]string) []interface{} {
 	var result []interface{}
 
