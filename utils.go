@@ -11,30 +11,45 @@ import (
 
 var (
 	Version = "0.1"
+	logo    = `
+                             _                         
+                            | |            _           
+ ____    ____  ____    ____ | | _    ____ | |_    ____ 
+|  _ \  / _  ||    \  / _  )| || \  / _  )|  _)  / _  |
+| | | |( ( | || | | |( (/ / | |_) )( (/ / | |__ ( ( | |
+|_| |_| \_||_||_|_|_| \____)|____/  \____) \___) \_||_|
+
+NameBeta V%s
+Insired by https://namebeta.com
+https://github.com/Timothy/namebeta
+
+`
 )
 
 const (
 	more         = "-m"
 	whois        = "-w"
+	help         = "-h"
 	checkSymbol  = "\u2714"
 	crossSymbol  = "\u2716"
 	circleSymbol = "\u25CF"
 )
 
 func displayUsage() {
-	color.Cyan("NameBeta V0.1")
-	fmt.Println()
-	color.Cyan("Inspired by https://namebeta.com")
-	fmt.Println()
+	color.Cyan(logo, Version)
 	color.Cyan("Usage:")
 	color.Cyan("namebeta <domain to query>    Query with input domain")
 	color.Cyan("namebeta -m <domain to query> Query more results with input domain")
 	color.Cyan("namebeta -w <domain to query> Query WHOIS infomation with input domain")
+	color.Cyan("namebeta -h                   Display usage and help")
 }
 
 func parseArgs(args []string) (string, bool, bool) {
 
 	switch args[1] {
+	case help:
+		displayUsage()
+		os.Exit(0)
 	case more:
 		if len(args) == 2 {
 			displayUsage()
