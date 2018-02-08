@@ -10,6 +10,7 @@ import (
 )
 
 var (
+	// Version of namebeta
 	Version = "0.1"
 	logo    = `
                              _                         
