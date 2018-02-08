@@ -25,6 +25,7 @@ func query(domain string, withMore, withWhois bool) {
 }
 
 func queryWhois(domain string) {
+
 	//Init spinner
 	s := spinner.New(spinner.CharSets[35], 100*time.Millisecond)
 	s.Prefix = "Querying... "
@@ -37,26 +38,13 @@ func queryWhois(domain string) {
 	if result[0].(bool) {
 		fmt.Println()
 
-		//table := tablewriter.NewWriter(os.Stdout)
-		//table.SetHeader([]string{"WHOIS INFOMATION"})
-		//table.SetAlignment(tablewriter.ALIGN_LEFT)
-		//table.SetAutoWrapText(false)
-
-		//row := []string{}
 		status := result[1].(map[string]interface{})["status"].(float64)
 
 		if status == 1 {
-			//row = append(row, "NOT FOUND.")
 			color.Red("NOT FOUND.")
 		} else {
-			//row = append(row, result[1].(map[string]interface{})["whois"].(string))
 			color.Cyan(result[1].(map[string]interface{})["whois"].(string))
 		}
-
-		//table.Append(row)
-		//table.Render()
-
-		//fmt.Println(result[1].(map[string]interface{})["whois"])
 	} else {
 		color.Red(fmt.Sprintf("%s Failed to query domain: %s \r\n", crossSymbol, domain))
 		os.Exit(1)
