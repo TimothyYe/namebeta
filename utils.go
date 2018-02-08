@@ -22,7 +22,7 @@ var (
 NameBeta V%s
 
 Insired by https://namebeta.com
-https://github.com/Timothy/namebeta
+https://github.com/TimothyYe/namebeta
 
 `
 )
