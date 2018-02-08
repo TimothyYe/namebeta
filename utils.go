@@ -20,6 +20,7 @@ var (
 |_| |_| \_||_||_|_|_| \____)|____/  \____) \___) \_||_|
 
 NameBeta V%s
+
 Insired by https://namebeta.com
 https://github.com/Timothy/namebeta
 
