@@ -77,7 +77,7 @@ func whoisQuery(domain string) []interface{} {
 	request := gorequest.New()
 	_, body, _ := request.Post(whoisURL).
 		Type("form").
-		Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36").
+		Set("User-Agent", userAgent).
 		Set("Refer", fmt.Sprintf(referURL, domain)).
 		SendMap(param).End()
 
@@ -95,7 +95,7 @@ func domainQuery(domain string, param map[string]string) []interface{} {
 	request := gorequest.New()
 	_, body, _ := request.Post(domainURL).
 		Type("form").
-		Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36").
+		Set("User-Agent", userAgent).
 		Set("Refer", fmt.Sprintf(referURL, domain)).
 		SendMap(param).End()
 

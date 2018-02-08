@@ -14,6 +14,7 @@ const (
 	domainURL = "https://namebeta.com/api/query"
 	whoisURL  = "https://namebeta.com/api/whois"
 	referURL  = "https://namebeta.com/search/%s"
+	userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36"
 )
 
 func query(domain string, withMore, withWhois bool) {
