@@ -11,7 +11,7 @@
 [7]: https://goreportcard.com/badge/github.com/timothyye/namebeta
 [8]: https://goreportcard.com/report/github.com/timothyye/namebeta
 
-NameBeta is a command line domain query tool, inspired by NameBeta.com.
+NameBeta is a command line domain query tool, inspired by [NameBeta.com](https://namebeta.com).
 
 ![](https://raw.githubusercontent.com/TimothyYe/namebeta/master/snapshots/namebeta.gif)
 
