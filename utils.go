@@ -41,7 +41,7 @@ func displayUsage() {
 	color.Cyan("Usage:")
 	color.Cyan("namebeta <domain to query>    Query with input domain")
 	color.Cyan("namebeta -m <domain to query> Query more results with input domain")
-	color.Cyan("namebeta -w <domain to query> Query WHOIS infomation with input domain")
+	color.Cyan("namebeta -w <domain to query> Query WHOIS information with input domain")
 	color.Cyan("namebeta -h                   Display usage and help")
 }
 
