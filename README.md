@@ -37,7 +37,11 @@ go get github.com/TimothyYe/namebeta
 
 #### Manual Installation
 
-Download it from [releases](https://github.com/TimothyYe/namebeta/releases), and extact it to /usr/bin.
+Download it from [releases](https://github.com/TimothyYe/namebeta/releases), extract it and install it:
+
+```bash
+cp namebeta /usr/local/bin/
+```
 
 ## Usage
 
