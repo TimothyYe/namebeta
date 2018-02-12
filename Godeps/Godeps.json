@@ -1,0 +1,58 @@
+{
+	"ImportPath": "namebeta",
+	"GoVersion": "go1.9",
+	"GodepVersion": "v79",
+	"Deps": [
+		{
+			"ImportPath": "github.com/briandowns/spinner",
+			"Comment": "1.0",
+			"Rev": "48dbb65d7bd5c74ab50d53d04c949f20e3d14944"
+		},
+		{
+			"ImportPath": "github.com/fatih/color",
+			"Comment": "v1.5.0-4-g67c513e",
+			"Rev": "67c513e5729f918f5e69786686770c27141a4490"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-colorable",
+			"Comment": "v0.0.9-8-g6fcc0c1",
+			"Rev": "6fcc0c1fd9b620311d821b106a400b35dc95c497"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-isatty",
+			"Comment": "v0.0.3-7-g6ca4dbf",
+			"Rev": "6ca4dbf54d38eea1a992b3c722a76a5d1c4cb25c"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-runewidth",
+			"Comment": "v0.0.2-3-g97311d9",
+			"Rev": "97311d9f7767e3d6f422ea06661bc2c7a19e8a5d"
+		},
+		{
+			"ImportPath": "github.com/moul/http2curl",
+			"Rev": "4e24498b31dba4683efb9d35c1c8a91e2eda28c8"
+		},
+		{
+			"ImportPath": "github.com/olekukonko/tablewriter",
+			"Rev": "b8a9be070da40449e501c3c4730a889e42d87a9e"
+		},
+		{
+			"ImportPath": "github.com/parnurzeal/gorequest",
+			"Comment": "v0.2.15-7-g5bf13be",
+			"Rev": "5bf13be198787abbed057fb7c4007f372083a0f5"
+		},
+		{
+			"ImportPath": "github.com/pkg/errors",
+			"Comment": "v0.8.0-5-gc605e28",
+			"Rev": "c605e284fe17294bda444b34710735b29d1a9d90"
+		},
+		{
+			"ImportPath": "golang.org/x/net/publicsuffix",
+			"Rev": "a6577fac2d73be281a500b310739095313165611"
+		},
+		{
+			"ImportPath": "golang.org/x/sys/unix",
+			"Rev": "d75a52659825e75fff6158388dddc6a5b04f9ba5"
+		}
+	]
+}
