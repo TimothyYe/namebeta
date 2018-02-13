@@ -80,12 +80,8 @@ func queryDomain(domain string, withMore bool) {
 
 	if result[0].(bool) {
 		table := tablewriter.NewWriter(os.Stdout)
-		table.SetHeader([]string{"Domain", "Available", "Unavailable"})
+		table.SetHeader([]string{"Domain", "Available"})
 		table.SetAlignment(tablewriter.ALIGN_CENTER)
-		table.SetColumnColor(
-			tablewriter.Colors{},
-			tablewriter.Colors{tablewriter.Bold, tablewriter.FgGreenColor},
-			tablewriter.Colors{tablewriter.Bold, tablewriter.FgRedColor})
 
 		for _, v := range result[2].([]interface{}) {
 			data := v.([]interface{})
@@ -94,11 +90,9 @@ func queryDomain(domain string, withMore bool) {
 
 			switch data[1].(float64) {
 			case 1:
-				row = append(row, checkSymbol)
-				row = append(row, "")
+				row = append(row, color.GreenString(checkSymbol))
 			case 2:
-				row = append(row, "")
-				row = append(row, crossSymbol)
+				row = append(row, color.RedString(crossSymbol))
 			}
 
 			table.Append(row)
