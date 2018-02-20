@@ -17,15 +17,15 @@ const (
 	userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36"
 )
 
-func query(domain string, withMore, withWhois bool) {
-	if withWhois {
-		queryWhois(domain)
-	} else {
-		queryDomain(domain, withMore)
+func query(c *cli) error {
+	if c.Whois {
+		return queryWhois(c.Domain)
 	}
+
+	return queryDomain(c.Domain, c.WithMore)
 }
 
-func queryWhois(domain string) {
+func queryWhois(domain string) error {
 
 	//Init spinner
 	s := spinner.New(spinner.CharSets[35], 100*time.Millisecond)
@@ -33,8 +33,13 @@ func queryWhois(domain string) {
 	s.Color("green")
 	s.Start()
 
-	result := whoisQuery(domain)
+	params := map[string]string{"domain": domain}
+	result, err := getDomainInfo(whoisURL, domain, params)
 	s.Stop()
+
+	if err != nil {
+		return err
+	}
 
 	if result[0].(bool) {
 		fmt.Println()
@@ -46,15 +51,15 @@ func queryWhois(domain string) {
 		} else {
 			color.Cyan(result[1].(map[string]interface{})["whois"].(string))
 		}
-	} else {
-		color.Red(fmt.Sprintf("%s Failed to query domain: %s \r\n", crossSymbol, domain))
-		os.Exit(1)
+
+		return nil
 	}
+
+	return fmt.Errorf("Failed to query domain: %s", domain)
 }
 
-func queryDomain(domain string, withMore bool) {
-	param := map[string]string{}
-	param["q"] = domain
+func queryDomain(domain string, withMore bool) error {
+	params := map[string]string{"q": domain}
 
 	var resultMore []interface{}
 
@@ -64,19 +69,23 @@ func queryDomain(domain string, withMore bool) {
 	s.Color("green")
 	s.Start()
 
-	result := domainQuery(domain, param)
+	result, err := getDomainInfo(domainURL, domain, params)
 
 	// For more option, query special domains
 	if withMore {
-		param["special"] = "1"
-		resultMore = domainQuery(domain, param)
-	}
+		params["special"] = "1"
+		resultMore, err = getDomainInfo(domainURL, domain, params)
 
-	if len(resultMore) > 0 && resultMore[0].(bool) {
-		result[2] = append(result[2].([]interface{}), resultMore[2].([]interface{})...)
+		if len(resultMore) > 0 && resultMore[0].(bool) {
+			result[2] = append(result[2].([]interface{}), resultMore[2].([]interface{})...)
+		}
 	}
 
 	s.Stop()
+
+	if err != nil {
+		return err
+	}
 
 	if result[0].(bool) {
 		table := tablewriter.NewWriter(os.Stdout)
@@ -85,8 +94,7 @@ func queryDomain(domain string, withMore bool) {
 
 		for _, v := range result[2].([]interface{}) {
 			data := v.([]interface{})
-			row := []string{}
-			row = append(row, data[0].(string))
+			row := []string{data[0].(string)}
 
 			switch data[1].(float64) {
 			case 1:
@@ -99,8 +107,8 @@ func queryDomain(domain string, withMore bool) {
 		}
 		table.Render()
 
-	} else {
-		color.Red(fmt.Sprintf("%s Failed to query domain: %s \r\n", crossSymbol, domain))
-		os.Exit(1)
+		return nil
 	}
+
+	return fmt.Errorf("Failed to query domain: %s", domain)
 }

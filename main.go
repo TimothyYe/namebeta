@@ -1,16 +1,21 @@
 package main
 
 import (
+	"fmt"
 	"os"
+
+	"github.com/fatih/color"
 )
 
 func main() {
-
-	if len(os.Args) == 1 {
+	cli := parseArgs(os.Args)
+	if cli == nil {
 		displayUsage()
 		os.Exit(0)
 	}
 
-	domain, withMore, withWhois := parseArgs(os.Args)
-	query(domain, withMore, withWhois)
+	if err := query(cli); err != nil {
+		color.Red(fmt.Sprintf("%s %s \r\n", crossSymbol, err.Error()))
+		os.Exit(1)
+	}
 }
