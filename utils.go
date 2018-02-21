@@ -1,12 +1,15 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"net/http"
+	"net/url"
 	"os"
 
 	"github.com/fatih/color"
-	"github.com/parnurzeal/gorequest"
 )
 
 var (
@@ -46,65 +49,66 @@ func displayUsage() {
 	color.Cyan("namebeta -h                   Display usage and help")
 }
 
-func parseArgs(args []string) (string, bool, bool) {
+type options struct {
+	Domain   string
+	WithMore bool
+	Whois    bool
+}
+
+func parseArgs(args []string) *options {
+	if len(os.Args) == 1 {
+		return nil
+	}
 
 	switch args[1] {
-	case help:
-		displayUsage()
-		os.Exit(0)
 	case more:
-		if len(args) == 2 {
-			displayUsage()
-			os.Exit(1)
+		if len(args) > 2 {
+			return &options{args[2], true, false}
 		}
-		return args[2], true, false
 	case whois:
-		if len(args) == 2 {
-			displayUsage()
-			os.Exit(1)
+		if len(args) > 2 {
+			return &options{args[2], false, true}
 		}
-		return args[2], false, true
 	default:
-		return args[1], false, false
+		return &options{args[1], false, false}
 	}
 
-	return "", true, true
+	return nil
 }
 
-func whoisQuery(domain string) []interface{} {
-	var result []interface{}
-	param := map[string]string{}
-	param["domain"] = domain
-
-	request := gorequest.New()
-	_, body, _ := request.Post(whoisURL).
-		Type("form").
-		Set("User-Agent", userAgent).
-		Set("Refer", fmt.Sprintf(referURL, domain)).
-		SendMap(param).End()
-
-	if err := json.Unmarshal([]byte(body), &result); err != nil {
-		color.Red(fmt.Sprintf("%s Failed to query WHOIS information for domain: %s \r\n", crossSymbol, domain))
-		os.Exit(1)
-	}
-
-	return result
-}
-
-func domainQuery(domain string, param map[string]string) []interface{} {
+func getDomainInfo(endpoint string, domain string, params map[string]string) ([]interface{}, error) {
 	var result []interface{}
 
-	request := gorequest.New()
-	_, body, _ := request.Post(domainURL).
-		Type("form").
-		Set("User-Agent", userAgent).
-		Set("Refer", fmt.Sprintf(referURL, domain)).
-		SendMap(param).End()
-
-	if err := json.Unmarshal([]byte(body), &result); err != nil {
-		color.Red(fmt.Sprintf("%s Failed to query domain: %s \r\n", crossSymbol, domain))
-		os.Exit(1)
+	form := url.Values{}
+	for k, v := range params {
+		form.Add(k, v)
 	}
 
-	return result
+	req, err := http.NewRequest("POST", endpoint, bytes.NewBufferString(form.Encode()))
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	req.Header.Set("User-Agent", userAgent)
+	req.Header.Set("Referer", fmt.Sprintf(referURL, domain))
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	if err = json.Unmarshal(body, &result); err != nil {
+		return nil, fmt.Errorf("Failed to query domain: %s, endpoint: %s, error: %s", domain, endpoint, err.Error())
+	}
+
+	return result, nil
 }
