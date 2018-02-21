@@ -49,13 +49,13 @@ func displayUsage() {
 	color.Cyan("namebeta -h                   Display usage and help")
 }
 
-type cli struct {
+type options struct {
 	Domain   string
 	WithMore bool
 	Whois    bool
 }
 
-func parseArgs(args []string) *cli {
+func parseArgs(args []string) *options {
 	if len(os.Args) == 1 {
 		return nil
 	}
@@ -63,14 +63,14 @@ func parseArgs(args []string) *cli {
 	switch args[1] {
 	case more:
 		if len(args) > 2 {
-			return &cli{args[2], true, false}
+			return &options{args[2], true, false}
 		}
 	case whois:
 		if len(args) > 2 {
-			return &cli{args[2], false, true}
+			return &options{args[2], false, true}
 		}
 	default:
-		return &cli{args[1], false, false}
+		return &options{args[1], false, false}
 	}
 
 	return nil

@@ -8,13 +8,13 @@ import (
 )
 
 func main() {
-	cli := parseArgs(os.Args)
-	if cli == nil {
+	options := parseArgs(os.Args)
+	if options == nil {
 		displayUsage()
 		os.Exit(0)
 	}
 
-	if err := query(cli); err != nil {
+	if err := query(options); err != nil {
 		color.Red(fmt.Sprintf("%s %s \r\n", crossSymbol, err.Error()))
 		os.Exit(1)
 	}

@@ -17,12 +17,12 @@ const (
 	userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36"
 )
 
-func query(c *cli) error {
-	if c.Whois {
-		return queryWhois(c.Domain)
+func query(o *options) error {
+	if o.Whois {
+		return queryWhois(o.Domain)
 	}
 
-	return queryDomain(c.Domain, c.WithMore)
+	return queryDomain(o.Domain, o.WithMore)
 }
 
 func queryWhois(domain string) error {
