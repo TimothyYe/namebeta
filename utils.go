@@ -32,12 +32,10 @@ https://github.com/TimothyYe/namebeta
 )
 
 const (
-	more         = "-m"
-	whois        = "-w"
-	help         = "-h"
-	checkSymbol  = "\u2714"
-	crossSymbol  = "\u2716"
-	circleSymbol = "\u25CF"
+	more        = "-m"
+	whois       = "-w"
+	checkSymbol = "\u2714"
+	crossSymbol = "\u2716"
 )
 
 func displayUsage() {

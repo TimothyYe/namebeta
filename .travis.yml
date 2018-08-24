@@ -2,6 +2,11 @@ language: go
 go: 
  - 1.8
  - 1.9
- - "1.10"
+ - 1.10
+
 install:
  - go get -v
+ - go get -u github.com/alecthomas/gometalinter
+script:
+ - gometalinter --install
+ - gometalinter --config=./gometalinter.json --vendor ./...
