@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"runtime"
 	"time"
 
 	"github.com/briandowns/spinner"
@@ -98,9 +99,17 @@ func queryDomain(domain string, withMore bool) error {
 
 			switch data[1].(float64) {
 			case 1:
-				row = append(row, color.GreenString(checkSymbol))
+				if runtime.GOOS == "windows" {
+					row = append(row, checkSymbol)
+				} else {
+					row = append(row, color.GreenString(checkSymbol))
+				}
 			case 2:
-				row = append(row, color.RedString(crossSymbol))
+				if runtime.GOOS == "windows" {
+					row = append(row, crossSymbol)
+				} else {
+					row = append(row, color.GreenString(crossSymbol))
+				}
 			}
 
 			table.Append(row)
