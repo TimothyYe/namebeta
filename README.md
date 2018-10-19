@@ -4,7 +4,7 @@
 
 [1]: https://travis-ci.org/TimothyYe/namebeta.svg?branch=master
 [2]: https://travis-ci.org/TimothyYe/namebeta
-[3]: https://img.shields.io/badge/release-v0.2-brightgreen.svg
+[3]: https://img.shields.io/badge/release-v0.3-brightgreen.svg
 [4]: https://github.com/TimothyYe/namebeta/releases
 [5]: https://img.shields.io/dub/l/vibe-d.svg
 [6]: LICENSE
