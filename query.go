@@ -31,7 +31,10 @@ func queryWhois(domain string) error {
 	//Init spinner
 	s := spinner.New(spinner.CharSets[35], 100*time.Millisecond)
 	s.Prefix = "Querying... "
-	s.Color("green")
+	if err := s.Color("green"); err != nil {
+		color.Red("Cannot set color")
+		os.Exit(1)
+	}
 	s.Start()
 
 	params := map[string]string{"domain": domain}
@@ -67,7 +70,10 @@ func queryDomain(domain string, withMore bool) error {
 	//Init spinner
 	s := spinner.New(spinner.CharSets[35], 100*time.Millisecond)
 	s.Prefix = "Querying... "
-	s.Color("green")
+	if err := s.Color("green"); err != nil {
+		color.Red("Failed to set color")
+		os.Exit(1)
+	}
 	s.Start()
 
 	result, err := getDomainInfo(domainURL, domain, params)
